@@ -1,5 +1,6 @@
 import { Component } from 'react';
-import { toast } from 'react-toastify';
+import propTypes from 'prop-types';
+import s from './Searchbar.module.css';
 
 export default class Searchbar extends Component {
   state = {
@@ -28,9 +29,10 @@ export default class Searchbar extends Component {
     const { handleQueryChange, handleFormSubmit } = this;
 
     return (
-      <header>
-        <form onSubmit={handleFormSubmit}>
+      <header className={s.searchbar}>
+        <form className={s.form} onSubmit={handleFormSubmit}>
           <input
+            className={s.input}
             type="text"
             value={query}
             autoComplete="off"
@@ -38,11 +40,15 @@ export default class Searchbar extends Component {
             placeholder="Search images and photos"
             onChange={handleQueryChange}
           />
-          <button type="submit">
-            <span>Search</span>
+          <button className={s.button} type="submit">
+            <span className={s.button_label}>Search</span>
           </button>
         </form>
       </header>
     );
   }
 }
+
+Searchbar.propTypes = {
+  onSubmit: propTypes.func.isRequired,
+};

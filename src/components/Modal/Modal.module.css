@@ -4,7 +4,11 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(8, 8, 8, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1200;
 }
 
 .modal_content {
@@ -13,8 +17,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  min-height: 300px;
-  width: 600px;
+  max-height: calc(100vh - 24px);
+  width: 900px;
   object-fit: cover;
   object-position: center;
 }

@@ -1,0 +1,20 @@
+.loader {
+  width: fit-content;
+  margin: 25vh auto;
+  font-size: 35px;
+  color: #3f51b5;
+}
+
+.spiner {
+  margin-right: 25px;
+  color: #3f51b5;
+  width: 50px;
+  height: 50px;
+  animation: spin 750ms linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}

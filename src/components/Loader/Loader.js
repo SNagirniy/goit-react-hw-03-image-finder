@@ -1,10 +1,11 @@
 import { ImSpinner9 } from 'react-icons/im';
+import s from './Loader.module.css';
 
 export default function Loader() {
   return (
-    <div role="alert">
+    <div className={s.loader} role="alert">
       {' '}
-      <ImSpinner9 size="32" />
+      <ImSpinner9 className={s.spiner} />
       Loading...
     </div>
   );

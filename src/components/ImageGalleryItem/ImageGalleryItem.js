@@ -1,4 +1,5 @@
-import react from 'react';
+import propTypes from 'prop-types';
+import s from './ImageGalleryItem.module.css';
 
 export default function ImageGalleryItem({
   url,
@@ -7,8 +8,20 @@ export default function ImageGalleryItem({
   onImageClick,
 }) {
   return (
-    <li onClick={onImageClick}>
-      <img src={url} alt={alt} data-source={largeImageURL} />
+    <li className={s.ImageGalleryItem} onClick={onImageClick}>
+      <img
+        className={s.ImageGalleryItem_image}
+        src={url}
+        alt={alt}
+        data-source={largeImageURL}
+      />
     </li>
   );
 }
+
+ImageGalleryItem.propTypes = {
+  url: propTypes.string.isRequired,
+  alt: propTypes.string.isRequired,
+  largeImageURL: propTypes.string.isRequired,
+  onImageClick: propTypes.func.isRequired,
+};

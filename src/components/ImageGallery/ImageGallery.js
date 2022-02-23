@@ -1,9 +1,11 @@
 import { Component } from 'react';
+import propTypes from 'prop-types';
 import ImageGalleryItem from 'components/ImageGalleryItem';
 import pictureAPI from '../Services/ServicesAPI';
 import Loader from 'components/Loader';
 import ErrorView from 'components/Error';
 import Button from 'components/Button';
+import s from './ImageGallery.module.css';
 
 const Status = {
   IDLE: 'idle',
@@ -65,7 +67,7 @@ export default class ImageGallery extends Component {
     const { data, status, button_show } = this.state;
 
     if (status === 'idle') {
-      return <div>Please enter search query.</div>;
+      return <div className={s.idle_message}>Please, enter search query.</div>;
     }
 
     if (status === 'pending') {
@@ -75,7 +77,7 @@ export default class ImageGallery extends Component {
     if (status === 'resolved') {
       return (
         <>
-          <ul>
+          <ul className={s.ImageGallery}>
             {data.map(({ id, webformatURL, tags, largeImageURL }) => {
               return (
                 <ImageGalleryItem
@@ -84,7 +86,7 @@ export default class ImageGallery extends Component {
                   alt={tags}
                   largeImageURL={largeImageURL}
                   onImageClick={() => {
-                    this.props.openModal(largeImageURL);
+                    this.props.openModal(largeImageURL, tags);
                   }}
                 />
               );
@@ -100,3 +102,8 @@ export default class ImageGallery extends Component {
     }
   }
 }
+
+ImageGallery.propTypes = {
+  query: propTypes.string.isRequired,
+  openModal: propTypes.func.isRequired,
+};
