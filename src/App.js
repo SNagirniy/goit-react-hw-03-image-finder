@@ -18,7 +18,7 @@ export default class App extends Component {
   togleModal = largeImageURL => {
     this.setState(({ showModal }) => ({
       showModal: !showModal,
-      largeImage: largeImageURL,
+      largeImage: largeImageURL ? largeImageURL : '',
     }));
   };
 

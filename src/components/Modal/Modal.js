@@ -9,7 +9,7 @@ export default class Modal extends Component {
     window.addEventListener('keydown', this.handleKeyDown);
   }
   componentWillUnmount() {
-    window.addEventListener('keydown', this.handleKeyDown);
+    window.removeEventListener('keydown', this.handleKeyDown);
   }
 
   handleKeyDown = e => {
@@ -25,10 +25,11 @@ export default class Modal extends Component {
   };
 
   render() {
+    const { largeImage } = this.props;
     return createPortal(
       <div onClick={this.handleBackdropClick} className={s.modal_backdrop}>
         <div className={s.modal_content}>
-          <img src={this.props.largeImage} />
+          <img className={s.image} src={largeImage} />
         </div>
       </div>,
       modalRoot

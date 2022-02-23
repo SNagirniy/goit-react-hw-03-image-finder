@@ -7,13 +7,8 @@ export default function ImageGalleryItem({
   onImageClick,
 }) {
   return (
-    <li>
-      <img
-        src={url}
-        alt={alt}
-        data-source={largeImageURL}
-        onClick={onImageClick}
-      />
+    <li onClick={onImageClick}>
+      <img src={url} alt={alt} data-source={largeImageURL} />
     </li>
   );
 }
