@@ -20,7 +20,7 @@ export default class ImageGallery extends Component {
     status: Status.IDLE,
     error: null,
     page: 1,
-    button_show: false,
+    total_results: false,
   };
 
   componentDidUpdate(PrevProps, PrevState) {
@@ -29,15 +29,15 @@ export default class ImageGallery extends Component {
     const { page } = this.state;
 
     if (prevQuery !== nextQuery) {
-      this.setState({ status: Status.PENDING });
+      this.setState({ status: Status.PENDING, page: 1 });
 
       pictureAPI
         .fetchPictures(nextQuery)
-        .then(({ hits, totalHits }) =>
+        .then(({ hits, total }) =>
           this.setState({
             data: hits,
             status: hits.length !== 0 ? Status.RESOLVED : Status.REJECTED,
-            button_show: totalHits > page ? true : false,
+            total_results: total,
           })
         )
         .catch(error => this.setState({ error, status: Status.REJECTED }));
@@ -46,11 +46,10 @@ export default class ImageGallery extends Component {
 
       pictureAPI
         .fetchPictures(nextQuery, page)
-        .then(({ hits, totalHits }) =>
+        .then(({ hits }) =>
           this.setState({
             data: [...PrevState.data, ...hits],
             status: Status.RESOLVED,
-            button_show: totalHits > page ? true : false,
           })
         )
         .catch(error => this.setState({ error, status: Status.REJECTED }));
@@ -58,13 +57,17 @@ export default class ImageGallery extends Component {
   }
 
   nextPage = () => {
-    this.setState(PrevState => ({
-      page: PrevState.page + 1,
-    }));
+    const { total_results, data } = this.state;
+    if (total_results > data.length) {
+      this.setState(PrevState => ({
+        page: PrevState.page + 1,
+      }));
+    }
+    return;
   };
 
   render() {
-    const { data, status, button_show } = this.state;
+    const { data, status, total_results } = this.state;
 
     if (status === 'idle') {
       return <div className={s.idle_message}>Please, enter search query.</div>;
@@ -92,7 +95,7 @@ export default class ImageGallery extends Component {
               );
             })}
           </ul>
-          {button_show && <Button loadMore={this.nextPage} />}
+          {total_results > data.length && <Button loadMore={this.nextPage} />}
         </>
       );
     }
