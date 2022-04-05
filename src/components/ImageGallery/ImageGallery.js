@@ -1,19 +1,28 @@
-import { Component } from 'react';
 import propTypes from 'prop-types';
 import ImageGalleryItem from 'components/ImageGalleryItem';
-import pictureAPI from '../Services/ServicesAPI';
-import Loader from 'components/Loader';
-import ErrorView from 'components/Error';
-import Button from 'components/Button';
 import s from './ImageGallery.module.css';
 
-const Status = {
-  IDLE: 'idle',
-  PENDING: 'pending',
-  RESOLVED: 'resolved',
-  REJECTED: 'rejected',
-};
+export default function ImageGallery({ data, openModal }) {
+  return (
+    <ul className={s.ImageGallery}>
+      {data.map(({ id, webformatURL, tags, largeImageURL }) => {
+        return (
+          <ImageGalleryItem
+            key={id}
+            url={webformatURL}
+            alt={tags}
+            largeImageURL={largeImageURL}
+            onImageClick={() => {
+              openModal(largeImageURL, tags);
+            }}
+          />
+        );
+      })}
+    </ul>
+  );
+}
 
+/*
 export default class ImageGallery extends Component {
   state = {
     data: [],
@@ -105,8 +114,8 @@ export default class ImageGallery extends Component {
     }
   }
 }
-
+*/
 ImageGallery.propTypes = {
-  query: propTypes.string.isRequired,
+  data: propTypes.array.isRequired,
   openModal: propTypes.func.isRequired,
 };
